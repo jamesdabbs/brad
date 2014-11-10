@@ -1,0 +1,8 @@
+---
+
+# All data local to the server should be located under this directory. Ideally,
+#   this is on a separate partition
+data_directory: /data
+
+# Storage is expected to be an external backup device
+storage_directory: /media/storage

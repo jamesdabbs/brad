@@ -3,6 +3,7 @@
   with_items:
     - rtorrent
     - tmux
+    - rsync
 
 - name: Create media group
   group: name=media state=present
@@ -10,8 +11,26 @@
 - name: Add me to media group
   user: name=james groups=media append=yes
 
-- name: Create directories
-  file: path=/data/{{ item }} state=directory owner=james group=media
+# -- DOWNLOADS -----
+- name: Create data directories
+  file: path={{ data_directory }}/{{ item }} state=directory owner=james group=media
   with_items:
     - downloads
+    - downloads/.session
+    - downloads/.watch
+    - music
     - mirrors
+
+- name: Add rtorrent service
+  copy: src=rtorrent.conf dest=/etc/init/rtorrent.conf
+
+- name: Install rtorrent config file
+  copy: src=rtorrent.rc dest=/home/james/.rtorrent.rc
+
+# -- BACKUPS ----
+- name: Create backup directories
+  file: path={{ storage_directory }}/backups state=directory owner=james group=media
+
+# TODO: this should probably be --delete, but check it first!
+- name: Backup server to storage
+  cron: name="server backup" hour=3 job="rsync -avz '{{ data_directory }}' '{{ storage_directory }}/backups/{{ ansible_hostname }}'"

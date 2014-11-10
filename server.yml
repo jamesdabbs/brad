@@ -1,7 +1,9 @@
 ---
 - hosts: server
   sudo: yes
+  vars_files:
+    - config.yml
   roles:
     - common
     - media
-    - yesod-build
+    #- yesod-build
