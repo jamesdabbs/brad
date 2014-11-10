@@ -1,0 +1,7 @@
+---
+- hosts: server
+  sudo: yes
+  roles:
+    - common
+    - media
+    - yesod-build

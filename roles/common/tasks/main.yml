@@ -1,0 +1,20 @@
+- name: Install packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - tree
+
+- name: Tighten SSH security
+  copy: src=sshd_config dest=/etc/ssh/sshd_config
+  notify: restart ssh
+
+- name: Add James user
+  user: name=james
+    comment="James Dabbs"
+    groups=sudo
+    append=yes
+    shell=/bin/bash
+    password=$6$DN2kQcNEd$phI.2gtmyLhlkRSCKE2sNMdYIg9am9uPHh6JR5IC8HgQzw5tx/egAI50nF2eGicMdKIejQHISJ1A1TtRByaZf.
+
+- name: Authorize SSH key
+  authorized_key: user=james key="{{ lookup('file', '/Users/james/.ssh/id_rsa.pub') }}"
+

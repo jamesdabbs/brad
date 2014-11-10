@@ -1,0 +1,17 @@
+- name: Install packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - rtorrent
+    - tmux
+
+- name: Create media group
+  group: name=media state=present
+
+- name: Add me to media group
+  user: name=james groups=media append=yes
+
+- name: Create directories
+  file: path=/data/{{ item }} state=directory owner=james group=media
+  with_items:
+    - downloads
+    - mirrors

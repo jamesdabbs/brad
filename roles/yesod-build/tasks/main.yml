@@ -1,0 +1,24 @@
+- name: Install packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - haskell-platform
+    - postgresql
+    - libpq-dev
+
+- name: Update cabal package list
+  # This creates line isn't really accurate, but the update only needs to run once
+  #   before the next task creates this directory
+  command: cabal update creates=/home/james/.cabal
+
+- name: Install latest version of cabal
+  command: cabal install cabal-install creates=/home/james/.cabal/bin/cabal
+  sudo: yes
+  sudo_user: james
+
+- name: Ensure cabal bin dir is on PATH
+  lineinfile: dest=/home/james/.bashrc line="export PATH=$HOME/.cabal/bin:$PATH"
+
+- name: Install yesod-bin
+  command: cabal install yesod-bin creates=/home/james/.cabal/bin/yesod
+  sudo: yes
+  sudo_user: james
