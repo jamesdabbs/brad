@@ -1,0 +1,4 @@
+---
+
+- name: restart keter
+  service: name=keter state=restarted enabled=yes

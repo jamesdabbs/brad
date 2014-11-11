@@ -1,10 +1,9 @@
 ---
-- hosts: home-server
+- hosts: keter
   sudo: yes
   vars_files:
     - config.yml
     - secrets.yml
   roles:
     - common
-    - media
-    - yesod-build
+    - yesod-serve

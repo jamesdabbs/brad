@@ -1,7 +1,21 @@
+- name: Get latest package data
+  apt: update_cache=yes
+
+- name: Run any safe upgrades
+  apt: upgrade=safe
+
 - name: Install packages
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=installed
   with_items:
+    - build-essential
+    - python-setuptools
+    - rsync
     - tree
+    - unattended-upgrades
+    - vim
+
+- name: Install python packages
+  easy_install: name=pip
 
 - name: Tighten SSH security
   copy: src=sshd_config dest=/etc/ssh/sshd_config
@@ -17,4 +31,3 @@
 
 - name: Authorize SSH key
   authorized_key: user=james key="{{ lookup('file', '/Users/james/.ssh/id_rsa.pub') }}"
-

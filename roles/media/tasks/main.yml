@@ -1,9 +1,9 @@
 - name: Install packages
   apt: name={{ item }} state=latest
   with_items:
-    - rtorrent
-    - tmux
     - rsync
+    - rtorrent
+    - screen
 
 - name: Create media group
   group: name=media state=present
@@ -18,8 +18,12 @@
     - downloads
     - downloads/.session
     - downloads/.watch
-    - music
     - mirrors
+    - music
+    - podcasts
+
+- name: Install flexget
+  easy_install: name=flexget
 
 - name: Add rtorrent service
   copy: src=rtorrent.conf dest=/etc/init/rtorrent.conf
