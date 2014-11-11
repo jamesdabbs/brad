@@ -1,3 +1,6 @@
+# TODO
+# - non-default SSH port
+# - firewall rules
 - name: Get latest package data
   apt: update_cache=yes
 
@@ -8,6 +11,7 @@
   apt: name={{ item }} state=installed
   with_items:
     - build-essential
+    - fail2ban
     - python-setuptools
     - rsync
     - tree
@@ -20,6 +24,9 @@
 - name: Tighten SSH security
   copy: src=sshd_config dest=/etc/ssh/sshd_config
   notify: restart ssh
+
+- name: Configure fail2ban
+  copy: src=jail.local dest=/etc/fail2ban/jail.local
 
 - name: Add James user
   user: name=james

@@ -17,8 +17,8 @@
     - incoming
 
 - name: Copy keter binary #from S3
-  copy: src=keter dest=/opt/keter/bin/keter mode=0700 owner=deploy
-  #get_url: url=https://s3.amazonaws.com/keter.jcd/keter dest=/opt/keter/bin/keter mode=0700 owner=deploy
+  #copy: src=keter dest=/opt/keter/bin/keter mode=0700 owner=deploy
+  get_url: url=https://s3.amazonaws.com/keter.jcd/keter dest=/opt/keter/bin/keter mode=0700 owner=deploy
 
 - name: Install config file
   copy: src=keter-config.yml dest=/opt/keter/etc/keter-config.yml
