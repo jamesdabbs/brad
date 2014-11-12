@@ -1,5 +1,4 @@
 ---
-
 - name: remove unnecessary packages
   shell: apt-get autoremove
 

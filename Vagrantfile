@@ -16,8 +16,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :private_network, ip: "192.168.33.11"
 
-  %w( pi-base ).each do |project|
+  %w( pi-base pi-base-api ).each do |project|
     # TODO: I'd like to mount this as a non-root user, but none exist until we provision
-    config.vm.synced_folder "../#{project}", "/opt/#{project}"
+    config.vm.synced_folder "../#{project}", "/opt/#{project}", owner: "james"
   end
 end

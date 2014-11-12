@@ -9,6 +9,9 @@
 - name: Create deploy user
   user: name=deploy
 
+- name: Authorize SSH key
+  authorized_key: user=deploy key="{{ lookup('file', '/Users/james/.ssh/id_rsa.pub') }}" #"
+ 
 - name: Create folders
   file: path=/opt/keter/{{ item }} state=directory owner=deploy
   with_items:
@@ -21,7 +24,7 @@
   get_url: url=https://s3.amazonaws.com/keter.jcd/keter dest=/opt/keter/bin/keter mode=0700 owner=deploy
 
 - name: Install config file
-  copy: src=keter-config.yml dest=/opt/keter/etc/keter-config.yml
+  copy: src=keter-config.yaml dest=/opt/keter/etc/keter-config.yaml
 
 - name: Add upstart job
   copy: src=keter.conf dest=/etc/init/keter.conf
