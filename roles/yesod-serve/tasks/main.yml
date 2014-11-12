@@ -11,7 +11,7 @@
 
 - name: Authorize SSH key
   authorized_key: user=deploy key="{{ lookup('file', '/Users/james/.ssh/id_rsa.pub') }}" #"
- 
+
 - name: Create folders
   file: path=/opt/keter/{{ item }} state=directory owner=deploy
   with_items:
@@ -35,4 +35,4 @@
   pip: name=s3-backups
 
 - name: Backup cron job
-  cron: name="postgres backup" hour=2 job="/usr/local/bin/postgres_to_s3.py --AWS_ACCESS_KEY_ID='{{ aws_access_key_id }}'  --AWS_SECRET_ACCESS_KEY='{{ aws_secret_access_key }}' --S3_BUCKET_NAME='backups.jcd' --S3_KEY_NAME='postgres/{{ ansible_hostname }}' --backup --archive"
+  cron: name="postgres backup" hour=2 minute=0 job="/usr/local/bin/postgres_to_s3.py --AWS_ACCESS_KEY_ID='{{ aws_access_key_id }}'  --AWS_SECRET_ACCESS_KEY='{{ aws_secret_access_key }}' --S3_BUCKET_NAME='backups.jcd' --S3_KEY_NAME='postgres/{{ ansible_hostname }}' --backup --archive"

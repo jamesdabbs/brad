@@ -37,4 +37,4 @@
 
 # TODO: this should probably be --delete, but check it first!
 - name: Backup server to storage
-  cron: name="server backup" hour=3 job="rsync -avz '{{ data_directory }}' '{{ storage_directory }}/backups/{{ ansible_hostname }}'"
+  cron: name="server backup" hour=3 minute=1 job="rsync -avz '{{ data_directory }}' '{{ storage_directory }}/backups/{{ ansible_hostname }}'"
