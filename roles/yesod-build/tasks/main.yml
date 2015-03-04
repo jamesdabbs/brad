@@ -4,6 +4,7 @@
     - haskell-platform
     - postgresql
     - libpq-dev
+    - git
 
 - name: Update cabal package list
   # This creates line isn't really accurate, but the update only needs to run once
