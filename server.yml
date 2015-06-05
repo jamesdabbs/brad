@@ -6,5 +6,5 @@
     - secrets.yml
   roles:
     - common
-    #- media
-    - yesod-build
+    - media
+    #- yesod-build

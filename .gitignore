@@ -1,3 +1,5 @@
 secrets.yml
 
 roles/yesod-serve/files/keter
+
+server-data
